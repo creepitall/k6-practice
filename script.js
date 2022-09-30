@@ -2,6 +2,8 @@ import http from 'k6/http';
 import {SharedArray} from 'k6/data';
 import {check} from "k6";
 
+var env = JSON.parse(open('./env.json'));
+
 export let options = {
     discardResponseBodies: true,
     scenarios: {
@@ -29,14 +31,15 @@ const data = new SharedArray('data', function () {
 export default function () {
     const element = data[Math.floor(Math.random() * data.length)];
 
-    const url = '';
+    const url = env.url;
+
+    let h = {}
+    for (hdrs of env.headers) {
+        h[hdrs.key] = hdrs.value
+    }
 
     const params = {
-        headers: {
-            'Content-Type': 'application/json',
-            'x-aer-test-type': 'load',
-            'x-aer-app-name': 'k6-loadtest'
-        },
+        headers: h,
     };
 
     let resp = http.post(url, JSON.stringify(element), params);
