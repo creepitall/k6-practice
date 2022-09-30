@@ -29,7 +29,7 @@ const data = new SharedArray('data', function () {
 export default function () {
     const element = data[Math.floor(Math.random() * data.length)];
 
-    const url = 'http://tarification-tarification-service-feature-tar-163-fix.dev1.k8s.ae-rus.net/v3/calculate/cart-freight-and-delivery';
+    const url = '';
 
     const params = {
         headers: {
